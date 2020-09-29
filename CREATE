@@ -1,0 +1,171 @@
+CREATE TABLE Directorio_telefonico(nombre VARCHAR(25),
+apellido VARCHAR(25),
+numero_telefonico VARCHAR(8),
+direccion VARCHAR(255),
+edad INT,
+PRIMARY KEY (numero_telefonico)
+);
+CREATE TABLE
+postgres=# SELECT * FROM Directorio_telefonico
+postgres-# ;
+ nombre | apellido | numero_telefonico | direccion | edad 
+--------+----------+-------------------+-----------+------
+(0 rows)
+
+postgres=# CREATE TABLE Agenda(
+postgres(# nick VARCHAR(25),
+postgres(# numero_telefonico VARCHAR(8),
+postgres(# FOREIGN KEY (numero_telefonico) REFERENCES
+postgres(# Directorio_telefonico(numero_telefonico)
+postgres(# );
+CREATE TABLE
+postgres=# SELECT * FROM Agenda
+postgres-# ;
+ nick | numero_telefonico 
+------+-------------------
+(0 rows)
+
+INSERT INTO Directorio_telefonico (nombre, apellido, numero_telefonico, direccion, edad) VALUES ('alejandro', 'meza', '97915882', 'penalolen', 30);
+INSERT INTO Directorio_telefonico (nombre, apellido, numero_telefonico, direccion, edad) VALUES ('gabriel', 'medina', '97915822', 'florida', 35);
+INSERT INTO Directorio_telefonico (nombre, apellido, numero_telefonico, direccion, edad) VALUES ('macarena', 'cuadros', '56815882', 'maipu', 16);
+
+INSERT INTO Agenda (nick,numero_telefonico) VALUES ('jandro','97915882');
+INSERT INTO Agenda (nick,numero_telefonico) VALUES ('meza','97915882');
+INSERT INTO Agenda (nick,numero_telefonico) VALUES ('mezi','97915882');
+
+UPDATE Directorio_telefonico SET direccion = 'islademaipo' WHERE nombre = 'alejandro';
+
+DELETE FROM TABLA; > TODOS LOS REGISTROS DE LA TABLA
+
+DELETE FROM TABLA WHERE NOMBRE = nombre_persona; 
+
+postgres=# ALTER TABLE agenda 
+postgres-# add nota VARCHAR(100); >> AGREGA NUEVA COLUMNA
+ALTER TABLE
+postgres=# SELECT * FROM AGENDA;
+  nick  | numero_telefonico | nota 
+--------+-------------------+------
+ jandro | 97915882          | 
+ meza   | 97915882          | 
+ jandro | 97915882          | 
+ meza   | 97915882          | 
+(4 rows)
+
+postgres=# CREATE TABLE directorio_correo(
+nombre VARCHAR(255) NOT NULL,
+pais VARCHAR(20),
+numero_telefonico VARCHAR(8) UNIQUE,
+edad INT);
+CREATE TABLE
+
+ARCHIVO --> NOMBRE DEL ARCHIVOa (genda.sql)
+++++++++
+DROP TABLES...
+INSERTES...
+
+COMANDO PARA EJECUTAR --> \i agenda.sql
+
+TREAER DESDE UN csv
+postgres=# \copy pokemones FROM 'pokemonesKanto.csv' csv header;
+COPY 151
+postgres=# \copy mis_pokemones FROM 'mis_pokemones.csv' csv header;
+COPY 199
+postgres=# 
+
+select * from pokemones limit 10; MAXIMA 10
+select nombre, length(nombre) as largo_del_nombre from pokemones; -> agrega una columna con nombre 
+SELECT COUNT(pokedex) from pokemones where tipo1= 'fuego' OR tipo2 = 'tierra';
+select pkm.nombre as n, pkm.pokedex as pkd from pokemones as pkm; creamos 
+select tipo1,count(*) from pokemones group by tipo1; --> agrupamos por tipo
+
+select * from pokemones order by nombre desc; oreden asce
+
+CREATE INDEX index_pokemon_nombre ON pokemones (nombre);
+CREATE INDEX
+
+select * from pg_indexes where tablename='pokemones'; --> consultar index
+
+DROP INDEXES NOMBREº
+
+INNER JOIN = MUESTRA LA TOTALIDAAD DE LAS COINCIDENCIAS EN LAS DOS TABLAS
+
+SELECT * FROM pokemones INNER JOIN mis_pokemones ON pokemones.pokedex = mis_pokemones.pokedex ORDER BY nombre;
+
+pokedex |   nombre   |   tipo1   |  tipo2   | pokedex | fecha_captura |        lugar        | huevo | peso  | estatura 
+---------+------------+-----------+----------+---------+---------------+---------------------+-------+-------+----------
+      63 | Abra       | psiquico  |          |      63 | 2019-07-19    | Huechuraba          | f     |  13.4 |      0.7
+      63 | Abra       | psiquico  |          |      63 | 2019-06-01    | Huechuraba          | f     |  10.1 |      0.6
+     144 | Articuno   | hielo     | volador  |     144 | 2019-07-13    | Independencia       | f     |  55.4 |      1.7
+       9 | Blastoise  | agua      |          |       9 | 2019-01-26    | Independencia       | f     | 180.9 |      1.8
+       9 | Blastoise  | agua      |          |       9 | 2019-02-16    | Independencia       | f     |   151 |      1
+
+SELECT * FROM pokemones LEFT JOIN mis_pokemones ON pokemones.pokedex = mis_pokemones.pokedex ORDER BY nombre;
+MUESTRA TODOS LOS POKEMONES DE LA PORIMERA TABLA Y LOS QUE NO ESTAN EN LA TABLA DOS LOS MUESTRA VACIOS
+
+pokedex |   nombre   |   tipo1   |  tipo2   | pokedex | fecha_captura |        lugar        | huevo | peso  | estatura 
+---------+------------+-----------+----------+---------+---------------+---------------------+-------+-------+----------
+      63 | Abra       | psiquico  |          |      63 | 2019-07-19    | Huechuraba          | f     |  13.4 |      0.7
+      63 | Abra       | psiquico  |          |      63 | 2019-06-01    | Huechuraba          | f     |  10.1 |      0.6
+     142 | Aerodactyl | roca      | volador  |         |               |                     |       |       |         
+      65 | Alakazam   | psiquico  |          |         |               |                     |       |       |         
+      24 | Arbok      | veneno    |          |         |               |                     |       |       |         
+      59 | Arcanine   | fuego     |          |         |               |                     |       |       |       :
+
+      SELECT * FROM pokemones LEFT JOIN mis_pokemones ON pokemones.pokedex = mis_pokemones.pokedex IS NULL ORDER BY nombre;
+        TODOS LO POKEMONES QUE NO HEMOS CAZADO 
+        pokedex |   nombre   |   tipo1   |  tipo2   | pokedex | fecha_captura | lugar | huevo | peso | estatura 
+---------+------------+-----------+----------+---------+---------------+-------+-------+------+----------
+      63 | Abra       | psiquico  |          |         |               |       |       |      |         
+     142 | Aerodactyl | roca      | volador  |         |               |       |       |      |         
+      65 | Alakazam   | psiquico  |          |         |               |       |       |      |         
+      24 | Arbok      | veneno    |          |         |               |       |       |      |         
+      59 | Arcanine   | fuego     |          |         |               |       |       |      |         
+     144 | Articuno   | hielo     | volador  |         |               |       |       |      |         
+      15 | Beedrill   | bicho     | veneno   |         |               |       |       |      |         
+      69 | Bellsprout | planta    | veneno   |         |               |       |       |      |         
+       9 | Blastoise  | agua      |          |         |               |       |       |      |         
+
+ SELECT * FROM pokemones FULL OUTER JOIN mis_pokemones ON pokemones.pokedex
+= mis_pokemones.pokedex ORDER BY nombre;
+
+COMBINA LAS DOS TABLAS
+
+pokedex |   nombre   |   tipo1   |  tipo2   | pokedex | fecha_captura |        lugar        | huevo | peso  | estatura 
+---------+------------+-----------+----------+---------+---------------+---------------------+-------+-------+----------
+      63 | Abra       | psiquico  |          |      63 | 2019-07-19    | Huechuraba          | f     |  13.4 |      0.7
+      63 | Abra       | psiquico  |          |      63 | 2019-06-01    | Huechuraba          | f     |  10.1 |      0.6
+     142 | Aerodactyl | roca      | volador  |         |               |                     |       |       |         
+      65 | Alakazam   | psiquico  |          |         |               |                     |       |       |         
+      24 | Arbok      | veneno    |          |         |               |                     |       |       |         
+      59 | Arcanine   | fuego     |          |         |               |                     |       |       |         
+     144 | Articuno   | hielo     | volador  |     144 | 2019-07-13    | Independencia       | f     |  55.4 |      1
+
+SELECT pokedex, nombre FROM pokemones
+WHERE pokedex IN
+(SELECT pokedex FROM mis_pokemones WHERE huevo = true);
+
+      pokedex |   nombre   
+---------+------------
+       7 | Squirtle
+      11 | Metapod
+      13 | Weedle
+      16 | Pidgey
+      19 | Rattata
+      23 | Ekans
+      33 | Nidorino
+
+
+select y.nombre, x.pokedex, x.peso
+from(
+(select peso, pokedex from mis_pokemones where peso>200) as x
+inner join pokemones as y on x.pokedex = y.pokedex;
+
+      nombre   | pokedex | peso  
+-----------+---------+-------
+ Golem     |      76 | 305.8
+ Golem     |      76 | 320.1
+ Onix      |      95 | 240.8
+ Lapras    |     131 | 252.8
+ Snorlax   |     143 | 460.1
+ Dragonite |     149 | 288.9
+ Dragonite |     149 | 279.5
