@@ -3,7 +3,6 @@ DROP DATABASE posts;
 --1.Crear Base de datos posts (1 punto)
 ----------------------------------------------------------------
 CREATE DATABASE posts WITH OWNER postgres;
-
 ----------------------------------------------------------------
 --2.Crear tabla post, con los atributos id, nombre de usuario,
 --fecha de creación, contenido,descripción (1 punto)
